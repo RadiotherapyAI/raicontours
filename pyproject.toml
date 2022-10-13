@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "raicontours"
-version = "0.2.0"
+version = "0.3.0-dev0"
 description = ""
 authors = ["Simon Biggs <simon.biggs@radiotherapy.ai>"]
 license = "AGPL-3.0-or-later"
@@ -8,6 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.7"
+typing-extensions = "*"
 
 [tool.poetry.dev-dependencies]
 black = "*"
@@ -18,7 +19,7 @@ mypy = "*"
 
 
 [tool.pyright]
-include = ["rai"]
+include = ["raicontours"]
 exclude = [
     "**/node_modules",
     "**/__pycache__",

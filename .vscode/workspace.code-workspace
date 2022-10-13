@@ -36,5 +36,11 @@
       "**/python-embed/*/**": true
     },
     "python.testing.promptToConfigure": false,
-    "cSpell.language": "en-GB"
+    "cSpell.language": "en-GB",
+    "cSpell.words": [
+      "DICOM",
+      "Chiasm",
+      "Glnd"
+    ]
+  }
 }

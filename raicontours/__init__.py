@@ -15,12 +15,17 @@
 
 # pylint: disable = invalid-name
 
+from __future__ import annotations
+
 from enum import Enum
-from typing import TypedDict
 import pathlib
 
+from typing_extensions import TypedDict
+
+from ._version import __version__ as __version__, version_info as version_info
+
 _HERE = pathlib.Path(__file__).parent.resolve()
-model_path = _HERE / "model.h5"
+_model_path = _HERE / "model.h5"
 
 
 class TG263(str, Enum):
@@ -32,6 +37,11 @@ class TG263(str, Enum):
 
     Eye_L = "Eye_L"
     Eye_R = "Eye_R"
+    Glnd_Lacrimal_L = "Glnd_Lacrimal_L"
+    Glnd_Lacrimal_R = "Glnd_Lacrimal_R"
+    Lens_L = "Lens_L"
+    Lens_R = "Lens_R"
+    OpticChiasm = "OpticChiasm"
     OpticNrv_L = "OpticNrv_L"
     OpticNrv_R = "OpticNrv_R"
 
@@ -39,6 +49,7 @@ class TG263(str, Enum):
 class Config(TypedDict):
     """The model configuration"""
 
+    model_path: pathlib.Path
     structures: list[TG263]
     patch_dimensions: tuple[int, int, int]
     encoding_filter_counts: list[int]
@@ -49,9 +60,15 @@ class Config(TypedDict):
 
 
 cfg: Config = {
+    "model_path": _model_path,
     "structures": [
         TG263.Eye_L,
         TG263.Eye_R,
+        TG263.Glnd_Lacrimal_L,
+        TG263.Glnd_Lacrimal_R,
+        TG263.Lens_L,
+        TG263.Lens_R,
+        # TG263.OpticChiasm,
         TG263.OpticNrv_L,
         TG263.OpticNrv_R,
     ],
@@ -62,3 +79,6 @@ cfg: Config = {
     "rescale_intercept": -1024.0,
     "reduce_block_sizes": [(2, 4, 4), (1, 2, 2), (1, 1, 1)],
 }
+
+# TODO: Add a "uids used for training" list and use it to verify a DICOM
+# file can be used for metric calculation.
