@@ -37,10 +37,6 @@
     },
     "python.testing.promptToConfigure": false,
     "cSpell.language": "en-GB",
-    "cSpell.words": [
-      "DICOM",
-      "Chiasm",
-      "Glnd"
-    ]
+    "cSpell.words": ["Chiasm", "DICOM", "Glnd", "Submand"]
   }
 }
