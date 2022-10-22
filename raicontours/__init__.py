@@ -1,4 +1,5 @@
-# Copyright (C) 2022 Radiotherapy AI Holdings Pty Ltd
+# RAi, machine learning solutions in radiotherapy
+# Copyright (C) 2021-2022 Radiotherapy AI Holdings Pty Ltd
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -17,46 +18,15 @@
 
 from __future__ import annotations
 
-from enum import Enum
 import pathlib
 
 from typing_extensions import TypedDict
 
+from .tg263 import TG263 as TG263
 from ._version import __version__ as __version__, version_info as version_info
 
 _HERE = pathlib.Path(__file__).parent.resolve()
 _model_path = _HERE / "model.h5"
-
-
-class TG263(str, Enum):
-    """TG263 naming.
-
-    Based on the spreadsheet downloadable from
-    https://www.aapm.org/pubs/reports/rpt_263_supplemental/TG263_Nomenclature_Worksheet_20170815.xls
-    """
-
-    Bone_Mandible = "Bone_Mandible"
-    Brain = "Brain"
-    Brainstem = "Brainstem"
-    Cochlea_L = "Cochlea_L"
-    Cochlea_R = "Cochlea_R"
-    Eye_L = "Eye_L"
-    Eye_R = "Eye_R"
-    Glnd_Lacrimal_L = "Glnd_Lacrimal_L"
-    Glnd_Lacrimal_R = "Glnd_Lacrimal_R"
-    Glnd_Submand_L = "Glnd_Submand_L"
-    Glnd_Submand_R = "Glnd_Submand_R"
-    Lens_L = "Lens_L"
-    Lens_R = "Lens_R"
-    Lung_L = "Lung_L"
-    Lung_R = "Lung_R"
-    OpticChiasm = "OpticChiasm"
-    OpticNrv_L = "OpticNrv_L"
-    OpticNrv_R = "OpticNrv_R"
-    Parotid_L = "Parotid_L"
-    Parotid_R = "Parotid_R"
-    SpinalCanal = "SpinalCanal"
-    SpinalCord = "SpinalCord"
 
 
 class Config(TypedDict):
@@ -78,26 +48,45 @@ def get_config():
     cfg: Config = {
         "model_path": _model_path,
         "structures": [
+            # TG263.Bladder,
             # TG263.Bone_Mandible,
             # TG263.Brain,
-            TG263.Brainstem,
+            # TG263.Brainstem,
+            # TG263.Carina,
+            # TG263.Cavity_Oral,
             # TG263.Cochlea_L,
             # TG263.Cochlea_R,
+            # TG263.Duodenum,
+            # TG263.Esophagus,
             TG263.Eye_L,
             TG263.Eye_R,
+            # TG263.Glnd_Adrenal_L,
+            # TG263.Glnd_Adrenal_R,
             TG263.Glnd_Lacrimal_L,
             TG263.Glnd_Lacrimal_R,
-            TG263.Glnd_Submand_L,
-            TG263.Glnd_Submand_R,
+            # TG263.Glnd_Submand_L,
+            # TG263.Glnd_Submand_R,
+            # TG263.Heart,
+            # TG263.Kidney_L,
+            # TG263.Kidney_R,
+            # TG263.Larynx,
             TG263.Lens_L,
             TG263.Lens_R,
+            # TG263.Liver,
             # TG263.Lung_L,
             # TG263.Lung_R,
+            # TG263.Musc_Constrict,
+            # TG263.OpticChiasm,
             TG263.OpticNrv_L,
             TG263.OpticNrv_R,
-            TG263.Parotid_L,
-            TG263.Parotid_R,
+            # TG263.Pancreas,
+            # TG263.Parotid_L,
+            # TG263.Parotid_R,
+            # TG263.Rectum,
             TG263.SpinalCord,
+            # TG263.Spleen,
+            # TG263.Stomach,
+            # TG263.Trachea,
         ],
         "patch_dimensions": (64, 64, 64),
         "encoding_filter_counts": [32, 64, 128, 256],
