@@ -40,6 +40,7 @@ class Config(TypedDict):
     rescale_slope: float
     rescale_intercept: float
     reduce_block_sizes: list[tuple[int, int, int]]
+    levels: dict[TG263, float]
 
 
 def get_config():
@@ -83,7 +84,7 @@ def get_config():
             # TG263.Parotid_L,
             # TG263.Parotid_R,
             # TG263.Rectum,
-            TG263.SpinalCord,
+            # TG263.SpinalCord,
             # TG263.Spleen,
             # TG263.Stomach,
             # TG263.Trachea,
@@ -94,6 +95,30 @@ def get_config():
         "rescale_slope": 4000.0,
         "rescale_intercept": -1024.0,
         "reduce_block_sizes": [(2, 4, 4), (1, 2, 2), (1, 1, 1)],
+        "levels": {
+            TG263.Lens_L: 50,
+            TG263.Lens_R: 50,
+            # TG263.OpticChiasm: 1,
+            TG263.OpticNrv_L: 50,
+            TG263.OpticNrv_R: 50,
+            TG263.Eye_L: 100,
+            TG263.Eye_R: 100,
+            TG263.Glnd_Lacrimal_L: 100,
+            TG263.Glnd_Lacrimal_R: 100,
+            # TG263.Glnd_Submand_L: 100,
+            # TG263.Glnd_Submand_R: 100,
+            # TG263.Musc_Constrict: 1.5,
+            # TG263.Trachea: 80,
+            # TG263.Esophagus: 80,
+            # TG263.Cochlea_L: 50,
+            # TG263.Cochlea_R: 50,
+            # TG263.Larynx: 50,
+            # TG263.Parotid_L: 70,
+            # TG263.Parotid_R: 70,
+            # TG263.Bone_Mandible: 110,
+            # TG263.Cavity_Oral: 80,
+            # TG263.Brainstem: 127.5,
+        },
     }
 
     return cfg
