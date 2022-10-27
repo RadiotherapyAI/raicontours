@@ -19,6 +19,7 @@
 from __future__ import annotations
 
 import pathlib
+from typing import Union
 
 from typing_extensions import TypedDict
 
@@ -29,18 +30,32 @@ _HERE = pathlib.Path(__file__).parent.resolve()
 _model_path = _HERE / "model.h5"
 
 
+StructureName = Union[str, TG263]
+
+
+class ContourOptions(TypedDict, total=False):
+    from_mask: TG263
+    mask_level: float
+    union: list[StructureName]
+    difference: list[StructureName]
+    intersection: list[StructureName]
+    buffer: float
+    colour: str
+    display: bool
+
+
 class Config(TypedDict):
     """The model configuration"""
 
     model_path: pathlib.Path
-    structures: list[TG263]
+    structures: list[StructureName]
     patch_dimensions: tuple[int, int, int]
     encoding_filter_counts: list[int]
     decoding_filter_counts: list[int]
     rescale_slope: float
     rescale_intercept: float
     reduce_block_sizes: list[tuple[int, int, int]]
-    levels: dict[TG263, float]
+    contours: dict[StructureName, ContourOptions]
 
 
 def get_config():
@@ -95,29 +110,70 @@ def get_config():
         "rescale_slope": 4000.0,
         "rescale_intercept": -1024.0,
         "reduce_block_sizes": [(2, 4, 4), (1, 2, 2), (1, 1, 1)],
-        "levels": {
-            TG263.Lens_L: 50,
-            TG263.Lens_R: 50,
-            # TG263.OpticChiasm: 1,
-            TG263.OpticNrv_L: 50,
-            TG263.OpticNrv_R: 50,
-            TG263.Eye_L: 100,
-            TG263.Eye_R: 100,
-            TG263.Glnd_Lacrimal_L: 100,
-            TG263.Glnd_Lacrimal_R: 100,
-            # TG263.Glnd_Submand_L: 100,
-            # TG263.Glnd_Submand_R: 100,
-            # TG263.Musc_Constrict: 1.5,
-            # TG263.Trachea: 80,
-            # TG263.Esophagus: 80,
-            # TG263.Cochlea_L: 50,
-            # TG263.Cochlea_R: 50,
-            # TG263.Larynx: 50,
-            # TG263.Parotid_L: 70,
-            # TG263.Parotid_R: 70,
-            # TG263.Bone_Mandible: 110,
-            # TG263.Cavity_Oral: 80,
-            # TG263.Brainstem: 127.5,
+        "contours": {
+            TG263.Lens_L: {
+                "from_mask": TG263.Lens_L,
+                "mask_level": 50,
+                "colour": "aqua blue",
+            },
+            TG263.Lens_R: {
+                "from_mask": TG263.Lens_R,
+                "mask_level": 50,
+                "colour": "aqua green",
+            },
+            TG263.OpticNrv_L: {
+                "from_mask": TG263.OpticNrv_L,
+                "mask_level": 127.5,
+                "colour": "deep red",
+            },
+            TG263.OpticNrv_R: {
+                "from_mask": TG263.OpticNrv_R,
+                "mask_level": 127.5,
+                "colour": "orange red",
+            },
+            f"{TG263.OpticNrv_L.value} Generous": {
+                "from_mask": TG263.OpticNrv_L,
+                "mask_level": 50,
+                "colour": "#2c6fbb",
+            },
+            f"{TG263.OpticNrv_R.value} Generous": {
+                "from_mask": TG263.OpticNrv_R,
+                "mask_level": 50,
+                "colour": "#39ad48",
+            },
+            TG263.Eye_L: {"from_mask": TG263.Eye_L, "mask_level": 100},
+            TG263.Eye_R: {"from_mask": TG263.Eye_R, "mask_level": 100},
+            TG263.Glnd_Lacrimal_L: {
+                "from_mask": TG263.Glnd_Lacrimal_L,
+                "mask_level": 100,
+            },
+            TG263.Glnd_Lacrimal_R: {
+                "from_mask": TG263.Glnd_Lacrimal_R,
+                "mask_level": 100,
+            },
+            TG263.Eyes: {
+                "union": [TG263.Eye_L, TG263.Eye_R],
+            },
+            "Eyes + 3mm": {
+                "union": [TG263.Eyes],
+                "buffer": 3,
+            },
+            "Eyes - 3mm": {
+                "union": [TG263.Eyes],
+                "buffer": -3,
+            },
+            TG263.Lens: {
+                "union": [TG263.Lens_L, TG263.Lens_R],
+                "display": False,
+            },
+            "Lens + 3mm": {
+                "union": [TG263.Lens],
+                "buffer": 3,
+            },
+            "Eyes - Lens": {
+                "union": [TG263.Eyes],
+                "difference": [TG263.Lens_L, TG263.Lens_R],
+            },
         },
     }
 
