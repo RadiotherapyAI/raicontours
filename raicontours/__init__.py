@@ -22,7 +22,7 @@ import json
 import pathlib
 from enum import Enum
 from functools import lru_cache
-from typing import Union
+from typing import Set, Tuple, Union
 
 import pydicom
 from typing_extensions import TypedDict
@@ -59,12 +59,12 @@ def dicom_utilisation(ds: pydicom.Dataset):
 
 
 @lru_cache(maxsize=None)
-def _training_record():
+def _training_record() -> Tuple[Set[str], Set[str]]:
     with open(_HERE / "training_record.json", encoding="utf8") as f:
         data = json.load(f)
 
-    training = set(data["training"])
-    validation = set(data["validation"])
+    training: Set[str] = set(data["training"])
+    validation: Set[str] = set(data["validation"])
 
     return training, validation
 
