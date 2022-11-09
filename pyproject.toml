@@ -17,6 +17,7 @@ blackdoc = "*"
 pyright = "*"
 pylint = "*"
 mypy = "*"
+pre-commit = "*"
 
 
 [tool.pyright]

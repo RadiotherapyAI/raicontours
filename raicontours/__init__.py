@@ -19,16 +19,17 @@
 from __future__ import annotations
 
 import json
-from functools import lru_cache
-import pydicom
-from enum import Enum
 import pathlib
+from enum import Enum
+from functools import lru_cache
 from typing import Union
 
+import pydicom
 from typing_extensions import TypedDict
 
+from ._version import __version__ as __version__
+from ._version import version_info as version_info
 from .tg263 import TG263 as TG263
-from ._version import __version__ as __version__, version_info as version_info
 
 _HERE = pathlib.Path(__file__).parent.resolve()
 _model_path = _HERE / "model.h5"
