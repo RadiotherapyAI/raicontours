@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "raicontours"
-version = "0.3.0-dev6"
+version = "0.3.0-dev7"
 description = ""
 authors = ["Simon Biggs <simon.biggs@radiotherapy.ai>"]
 license = "AGPL-3.0-or-later"
